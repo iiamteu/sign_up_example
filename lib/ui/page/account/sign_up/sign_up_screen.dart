@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:sigin_exam/ui/page/account/sign_in/sign_in_screen.dart';
+
+import '../welcom_screen.dart';
 
 class SigUpScreen extends StatefulWidget {
   const SigUpScreen({Key key}) : super(key: key);
@@ -9,8 +12,8 @@ class SigUpScreen extends StatefulWidget {
 }
 
 class _SigUpScreenState extends State<SigUpScreen> {
-  TextEditingController emailController;
-  TextEditingController passWordController;
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passWordController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -18,6 +21,8 @@ class _SigUpScreenState extends State<SigUpScreen> {
 
   @override
   void dispose() {
+    emailController.dispose();
+    passWordController.dispose();
     super.dispose();
   }
 
@@ -56,11 +61,12 @@ class _SigUpScreenState extends State<SigUpScreen> {
                 autocorrect: false,
                 decoration: InputDecoration(
                   prefixIconConstraints: const BoxConstraints(maxHeight: 18),
+                  hintText: 'Email',
                   // alignLabelWithHint: true,
                   hintStyle: Theme.of(context)
                       .textTheme
                       .overline
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: Colors.grey),
                   suffixIconConstraints: const BoxConstraints(maxHeight: 18),
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -80,6 +86,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
               TextFormField(
                 controller: emailController,
                 autocorrect: false,
+                obscureText: true,
                 decoration: InputDecoration(
                   counterText: '',
                   suffixIcon: const Padding(
@@ -87,11 +94,12 @@ class _SigUpScreenState extends State<SigUpScreen> {
                     child: Icon(Icons.remove_red_eye),
                   ),
                   prefixIconConstraints: const BoxConstraints(maxHeight: 18),
+                  hintText: 'Password',
                   // alignLabelWithHint: true,
                   hintStyle: Theme.of(context)
                       .textTheme
                       .overline
-                      .copyWith(color: Colors.white),
+                      .copyWith(color: Colors.grey),
                   suffixIconConstraints: const BoxConstraints(maxHeight: 18),
                   isDense: true,
                   contentPadding: const EdgeInsets.symmetric(vertical: 12),
@@ -111,7 +119,15 @@ class _SigUpScreenState extends State<SigUpScreen> {
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
             GestureDetector(
-              onTap: () {},
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const WelcomScreen(),
+                  ),
+                  (route) => false,
+                );
+              },
               child: Container(
                 margin: const EdgeInsets.symmetric(
                   horizontal: 30,
@@ -124,7 +140,7 @@ class _SigUpScreenState extends State<SigUpScreen> {
                 ),
                 child: Center(
                     child: Text(
-                  'GET STARTED',
+                  'SIGN UP',
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
@@ -206,7 +222,13 @@ class _SigUpScreenState extends State<SigUpScreen> {
               children: [
                 const Text('Join with us, '),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ));
+                  },
                   child: Text(
                     'Create Account',
                     style: Theme.of(context)
